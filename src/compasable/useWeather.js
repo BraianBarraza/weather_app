@@ -1,17 +1,24 @@
+import axios from 'axios'
+
 export default function useWeather() {
 
-    const getWeather = ({ city, country }) => {
+    const getWeather = async ({city, country}) => {
         // Import the API Key
+        const key = import.meta.env.VITE_API_KEY;
 
-        // Obtain lat, long
+        try {
+            //get lat long
+            const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=1&appid=${key}`
+            const {data} = await axios(url)
+            const {lat, long} = data[0]
+            //get Weather
 
-        // Obtain the weather
-
-        console.log('consulting... ', city)
-        console.log('consulting... ', country)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
-    return{
+    return {
         getWeather,
     }
 }
