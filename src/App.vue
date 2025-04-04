@@ -1,8 +1,10 @@
 <script setup>
 import Form from "./components/Form.vue";
 import useWeather from "./compasable/useWeather.js";
+import Weather from "./components/Weather.vue";
+import Spinner from "./components/Spinner.vue";
 
-const {getWeather} = useWeather();
+const {getWeather, showWeather, weather,loading} = useWeather();
 
 </script>
 
@@ -12,6 +14,11 @@ const {getWeather} = useWeather();
   <div class="container weather-searcher">
     <Form
         @get-weather="getWeather"
+    />
+    <Spinner v-if="loading"/>
+    <Weather
+        v-if="showWeather"
+        :weather="weather"
     />
 
   </div>
