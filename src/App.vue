@@ -3,8 +3,9 @@ import Form from "./components/Form.vue";
 import useWeather from "./compasable/useWeather.js";
 import Weather from "./components/Weather.vue";
 import Spinner from "./components/Spinner.vue";
+import Alert from "./components/Alert.vue";
 
-const {getWeather, showWeather, weather,loading} = useWeather();
+const {getWeather, showWeather, weather, loading, error} = useWeather();
 
 </script>
 
@@ -16,6 +17,9 @@ const {getWeather, showWeather, weather,loading} = useWeather();
         @get-weather="getWeather"
     />
     <Spinner v-if="loading"/>
+
+    <Alert v-if="error">{{ error }}</Alert>
+
     <Weather
         v-if="showWeather"
         :weather="weather"

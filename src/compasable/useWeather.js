@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const cityName = ref('')
 const countryName = ref('')
+const error = ref('')
 
 export default function useWeather() {
     const weather = ref({})
@@ -14,6 +15,7 @@ export default function useWeather() {
         const key = import.meta.env.VITE_API_KEY;
         loading.value = true;
         weather.value = {};
+        error.value = ''
 
         try {
             //get lat long
@@ -28,14 +30,14 @@ export default function useWeather() {
             const {data: result} = await axios(urlWeather)
             weather.value = result
 
-        } catch (err) {
-            console.error(err)
-        }finally {
+        } catch {
+            error.value = 'City not found'
+        } finally {
             loading.value = false
         }
     }
 
-    const showWeather = computed(()=>{
+    const showWeather = computed(() => {
         return Object.values(weather.value).length > 0
     })
 
@@ -48,6 +50,7 @@ export default function useWeather() {
         loading,
         weather,
         cityName,
-        countryName
+        countryName,
+        error
     }
 }
